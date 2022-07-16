@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset = "UTF-8">
+        <title>MOTEL 1864</title>
+        <scrip src ="scripts/jquery-3.6.0.js"></script>
+            <!-- Reset CSS -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+            <!-- Font Awesome CSS  -->
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" />  
+            <!-- Calendar Style CSS -->
+            <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <h1>MOTEL 1864</h1>
+        <h3>заселение</h3>
+        <div class="calendar-wrapper">
+            <button id="btnPrev" type="button">Предыдущий</button>
+            <button id="btnNext" type="button">Следующий</button>
+        <div id="divCal"></div>
+        </div>
+        <script>
+            var Cal = function(divId) {
+                //Сохраняем идентификатор div
+                this.divId = divId;
+                // Месяцы начиная с января
+                this.Months =['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+                //Устанавливаем текущий месяц, год
+                var d = new Date();
+                this.currMonth = d.getMonth();
+                this.currYear = d.getFullYear();
+                this.currDay = d.getDate();
+            };
+            //получаем количество дней в месяце
+            Date.prototype.daysInMonth = function() {
+		        return 32 - new Date(this.getFullYear(), this.getMonth(), 32).getDate();
+	        };
+            // Переход к следующему месяцу
+            Cal.prototype.nextMonth = function() {
+                if ( this.currMonth == 11 ) {
+                    this.currMonth = 0;
+                    this.currYear = this.currYear + 1;
+                }
+                else {
+                    this.currMonth = this.currMonth + 1;
+                }
+                this.showcurr();
+            };
+            // Переход к предыдущему месяцу
+            Cal.prototype.previousMonth = function() {
+                if ( this.currMonth == 0 ) {
+                    this.currMonth = 11;
+                    this.currYear = this.currYear - 1;
+                }
+                else {
+                    this.currMonth = this.currMonth - 1;
+                }
+                this.showcurr();
+            };
+            // Показать текущий месяц
+            Cal.prototype.showcurr = function() {
+                this.showMonth(this.currYear, this.currMonth);
+            };
+            // Показать месяц (год, месяц)
+            Cal.prototype.showMonth = function(y, m, d) {
+                var d = new Date()
+                // Последний день выбранного месяца
+                , lastDateOfMonth =  new Date(y, m+1, 0).getDate()
+                var html = '<table>';
+                // Запись выбранного месяца и года
+                html += '<thead><tr>';
+                html += '<td colspan="7">' + this.Months[m] + ' ' + y + '</td>';
+                html += '</tr>';
+                // заголовок дней в месяце
+                html += '<tr class="days">';
+                    html += '<td>'+" "+'</td>';
+                for(var i=1; i <= lastDateOfMonth;i++) {
+                    html += '<td>' + i + '</td>';
+                    console.log(this.daysInMonth)
+                }
+                html += '</tr></thead>';
+                    // Конец таблицы
+                    // Записываем HTML в div
+                    document.getElementById(this.divId).innerHTML = html;
+                    };
+                    // При загрузке окна
+                    window.onload = function() {
+                    // Начать календарь
+                        var c = new Cal("divCal");			
+                        c.showcurr();
+                        // Привязываем кнопки «Следующий» и «Предыдущий»
+                        getId('btnNext').onclick = function() {
+                            c.nextMonth();
+                    };
+                    getId('btnPrev').onclick = function() {
+                        c.previousMonth();
+                    };
+                }
+                // Получить элемент по id
+                function getId(id) {
+                    return document.getElementById(id);
+                }
+                html += '<tbody id="table0content">';
+                function buildTable(){
+                    $("#table-content").empty();
+                    $.get("/motel1864/rooms").done(function(rooms){
+                        $.get("/motel1864/reservations").done(function(reservations){
+                            var tableInf = {rooms, reeservation}
+                            $.each(tableInf, function(){
+                                
+                            })
+                        })
+                    })
+                }
+                html += '</table>';
+        </script>
+    </body>
+</html>

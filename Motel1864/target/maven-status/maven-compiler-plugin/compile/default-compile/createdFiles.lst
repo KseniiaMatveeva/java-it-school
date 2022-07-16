@@ -1,0 +1,14 @@
+com\mycompany\motel1864\domain\Reservation.class
+com\mycompany\motel1864\service\ReservationService.class
+com\mycompany\motel1864\repository\ReservationJdbcRepository.class
+com\mycompany\motel1864\repository\ReservationRepository.class
+com\mycompany\motel1864\repository\RoomJdbcRepository.class
+com\mycompany\motel1864\service\RoomService.class
+com\mycompany\motel1864\repository\Repository.class
+com\mycompany\motel1864\controller\ReservationController.class
+com\mycompany\motel1864\repository\RoomRepository.class
+com\mycompany\motel1864\domain\Room.class
+com\mycompany\motel1864\Application.class
+com\mycompany\motel1864\service\RoomServiceImpl.class
+com\mycompany\motel1864\service\ReservationServiceImpl.class
+com\mycompany\motel1864\controller\RoomController.class
