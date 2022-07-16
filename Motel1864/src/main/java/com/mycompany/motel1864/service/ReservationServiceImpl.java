@@ -5,8 +5,12 @@
 package com.mycompany.motel1864.service;
 
 import com.mycompany.motel1864.domain.Reservation;
+import com.mycompany.motel1864.domain.Room;
 import com.mycompany.motel1864.repository.ReservationRepository;
+import com.mycompany.motel1864.repository.RoomRepository;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,19 +23,25 @@ public class ReservationServiceImpl implements ReservationService {
     
     private final ReservationRepository reservationRepository;
     
+    private final RoomRepository roomRepository;
+    
     @Autowired
-    public ReservationServiceImpl(ReservationRepository reservationRepository){
+    public ReservationServiceImpl(ReservationRepository reservationRepository, RoomRepository roomRepository){
         this.reservationRepository = reservationRepository;
+        this.roomRepository = roomRepository;
     }
 
-    @Override
-    public Collection<Reservation> getAllRoom() {
-        return reservationRepository.findAll();
+    public Map <Integer, Collection<Reservation>> getAllRoom() {
+        Map <Integer, Collection<Reservation>> tContent = new HashMap<>();
+        Room room = (Room) roomRepository.findAll();
+        Reservation reservation = (Reservation) reservationRepository.findAll();
+        while(room.getId() == reservation.getRoomId()){
+            tContent.put(room.getId(), reservationRepository.findAll());
+        }
+        return tContent;
     }
-
     @Override
     public void createReservation(Reservation reserv) {
         reservationRepository.save(reserv);
     }
-    
 }

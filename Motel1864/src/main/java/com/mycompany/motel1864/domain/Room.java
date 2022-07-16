@@ -14,7 +14,7 @@ public class Room {
     
     private String room;
     
-    private Integer id;
+    private static Integer id;
     
     public Room(String room, Integer id){
         this.room = room;
@@ -25,7 +25,7 @@ public class Room {
         return room;
     }
     
-    public Integer getId(){
+    public static Integer getId(){
         return id;
     }
     

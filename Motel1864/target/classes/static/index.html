@@ -3,13 +3,13 @@
     <head>
         <meta charset = "UTF-8">
         <title>MOTEL 1864</title>
-        <scrip src ="scripts/jquery-3.6.0.js"></script>
+        <script src ="scripts/jquery-3.6.0.js"></script>
             <!-- Reset CSS -->
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
             <!-- Font Awesome CSS  -->
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" />  
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" >  
             <!-- Calendar Style CSS -->
-            <link rel="stylesheet" href="styles.css">
+            <!--<link rel="stylesheet" href="styles.css">-->
     </head>
     <body>
         <h1>MOTEL 1864</h1>
@@ -19,6 +19,12 @@
             <button id="btnNext" type="button">Следующий</button>
         <div id="divCal"></div>
         </div>
+        <table>
+            <thead id="thead" border ="1"></thead>
+            <tbody id="table-content">
+                <tr><td id="room"></td></tr>
+            </tbody>
+        </table>
         <script>
             var Cal = function(divId) {
                 //Сохраняем идентификатор div
@@ -66,28 +72,34 @@
                 var d = new Date()
                 // Последний день выбранного месяца
                 , lastDateOfMonth =  new Date(y, m+1, 0).getDate()
-                var html = '<table>';
                 // Запись выбранного месяца и года
-                html += '<thead><tr>';
-                html += '<td colspan="7">' + this.Months[m] + ' ' + y + '</td>';
-                html += '</tr>';
+                $("#thead").empty();
+
+                var thtml = '<td colspan="7">' + this.Months[m] + ' ' + y + '</td>';
+                thtml += '</tr>';
+                //$("#thead").append(thtml);
                 // заголовок дней в месяце
-                html += '<tr class="days">';
-                    html += '<td>'+" "+'</td>';
-                for(var i=1; i <= lastDateOfMonth;i++) {
-                    html += '<td>' + i + '</td>';
-                    console.log(this.daysInMonth)
-                }
-                html += '</tr></thead>';
+                
+                thtml += '</tr></thead>';
                     // Конец таблицы
                     // Записываем HTML в div
-                    document.getElementById(this.divId).innerHTML = html;
-                    };
+                    document.getElementById(this.divId).innerHTML = thtml;
+                    thtml += '<tr class="days">';
+                    thtml += '<td>'+" "+'</td>';
+                for(var i=1; i <= lastDateOfMonth;i++) {
+                    thtml += '<td>' + i + '</td>';
+                }
+                $("#thead").append(thtml);
+
+                };
                     // При загрузке окна
                     window.onload = function() {
+
                     // Начать календарь
                         var c = new Cal("divCal");			
                         c.showcurr();
+                        buildTable()
+
                         // Привязываем кнопки «Следующий» и «Предыдущий»
                         getId('btnNext').onclick = function() {
                             c.nextMonth();
@@ -100,19 +112,31 @@
                 function getId(id) {
                     return document.getElementById(id);
                 }
-                html += '<tbody id="table0content">';
+                
                 function buildTable(){
                     $("#table-content").empty();
                     $.get("/motel1864/rooms").done(function(rooms){
-                        $.get("/motel1864/reservations").done(function(reservations){
-                            var tableInf = {rooms, reeservation}
+                        $.each(rooms, function(){
+                        var row = "<tr><td>"+this.room + "</td></tr>";
+                        console.log(rooms);
+                        $("#table-content").append(row);
+                        });
+                    });
+                        /*$.get("/motel1864/reservations").done(function(reservations){
+                            var tableInf = {rooms, reeservations};
+                            let array1, array2, array3, array4, array5,
+                             array6, array7, array8, array9, array10, array11,
+                             array12, array13, array14, array15;
+                             var roomName = rooms.getRoom;
+                             array1.push("<tr><td>" + roomName +"</td>")
                             $.each(tableInf, function(){
-                                
+                                if(reservations.getRoomId == rooms.getRoomId == 1){
+                                    array1.push("<td>" + reservations +"</td>")
+                                } array1.push("</tr>")
                             })
-                        })
-                    })
-                }
-                html += '</table>';
+                        })*/
+                    }
+                
         </script>
     </body>
 </html>

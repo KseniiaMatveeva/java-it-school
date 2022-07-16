@@ -5,7 +5,9 @@
 package com.mycompany.motel1864.service;
 
 import com.mycompany.motel1864.domain.Reservation;
+import com.mycompany.motel1864.domain.Room;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  *
@@ -13,7 +15,7 @@ import java.util.Collection;
  */
 public interface ReservationService {
     
-    Collection<Reservation> getAllRoom();
+    Map <Integer, Collection<Reservation>> getAllRoom();
     public void createReservation(Reservation reservation);
 
 }

@@ -35,8 +35,8 @@ public class RoomController {
         this.roomService = roomService;
     }
     
-    /*@GetMapping
+    @GetMapping
     public Collection<Room> getRoom(){
         return room;
-    }*/
+    }
 }
